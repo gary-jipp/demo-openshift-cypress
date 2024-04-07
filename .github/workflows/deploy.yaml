@@ -1,13 +1,8 @@
 name: demo-cypress build
 on:
   push:
-     branches:
+    branches:
       - dev
-    # paths:
-    #   - "app/Dockerfile"
-    #   - "app/*.js"
-    #   - "app/package*.json"
-    #   - ".github/workflows/deploy.yaml"
     paths-ignore:
       - '**/*.md'
       - '_openshift'
