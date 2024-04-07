@@ -1,8 +1,7 @@
 name: demo-cypress build
 on:
   push:
-    branches:
-      - dev
+    branches: [ dev ]
     paths-ignore:
       - '**/*.md'
       - '_openshift'
