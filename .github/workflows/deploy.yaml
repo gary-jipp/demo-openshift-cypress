@@ -1,13 +1,16 @@
-name: demo-express build
+name: demo-cypress build
 on:
   push:
-    paths:
-      - "app/Dockerfile"
-      - "app/*.js"
-      - "app/package*.json"
-      - ".github/workflows/deploy.yaml"
-    # paths-ignore:
-    #   - '**/*.md'
+     branches:
+      - dev
+    # paths:
+    #   - "app/Dockerfile"
+    #   - "app/*.js"
+    #   - "app/package*.json"
+    #   - ".github/workflows/deploy.yaml"
+    paths-ignore:
+      - '**/*.md'
+      - '_openshift'
   workflow_dispatch:
 defaults:
   run:
@@ -19,7 +22,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
         with:
-          node-version: "16"
+          node-version: "18"
       - name: Install dependencies
         run: npm install
       - name: Unit tests
@@ -31,8 +34,8 @@ jobs:
       - name: OpenShift Build
         env:
           NAMESPACE: ${{ secrets.OpenShiftNamespace }}
-          BUILD_NAME: demo-express
-          IMAGE_NAME: demo-express
+          BUILD_NAME: demo-app
+          IMAGE_NAME: demo-app
         uses: redhat-developer/openshift-actions@v1.1
         with:
           version: "latest"
