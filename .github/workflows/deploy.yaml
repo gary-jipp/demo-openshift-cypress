@@ -1,0 +1,44 @@
+name: demo-express build
+on:
+  push:
+    paths:
+      - "app/Dockerfile"
+      - "app/*.js"
+      - "app/package*.json"
+      - ".github/workflows/deploy.yaml"
+    # paths-ignore:
+    #   - '**/*.md'
+  workflow_dispatch:
+defaults:
+  run:
+    working-directory: ./app
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
+        with:
+          node-version: "16"
+      - name: Install dependencies
+        run: npm install
+      - name: Unit tests
+        run: npm run test --if-present
+  openshift-build:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: OpenShift Build
+        env:
+          NAMESPACE: ${{ secrets.OpenShiftNamespace }}
+          BUILD_NAME: demo-express
+          IMAGE_NAME: demo-express
+        uses: redhat-developer/openshift-actions@v1.1
+        with:
+          version: "latest"
+          openshift_server_url: ${{ secrets.OpenShiftServerURL}}
+          parameters: '{"apitoken": "${{ secrets.OpenShiftToken }}", "acceptUntrustedCerts": "true"}'
+          cmd: |
+            'version'
+            'start-build ${BUILD_NAME}  --follow'
+# 'tag -n ${NAMESPACE} ${NAMESPACE}/${IMAGE_NAME}:latest ${NAMESPACE}/${IMAGE_NAME}:dev'

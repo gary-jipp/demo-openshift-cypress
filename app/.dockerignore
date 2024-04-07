@@ -1,0 +1,7 @@
+README.md
+openshift
+.github
+.gitignore
+.dockerignore
+.Dockerfile
+node_modules
