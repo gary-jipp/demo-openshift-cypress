@@ -1,4 +1,4 @@
-# demo-openshift-pipelibe
+# demo-openshift-cypress
 
 Minimal Node Express example of OpenShift Cypress Testing.  Cypress runs in a container in "watch" mode with a mounted "fixtures" volume. If any fixture changes, the tests will run again.
 
