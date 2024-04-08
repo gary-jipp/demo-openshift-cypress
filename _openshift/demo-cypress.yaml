@@ -19,7 +19,7 @@ objects:
       dockerStrategy:
         from:
           kind: ImageStreamTag
-          name: node:16-alpine
+          name: cypress/included:latest
     output:
       to:
         kind: ImageStreamTag
