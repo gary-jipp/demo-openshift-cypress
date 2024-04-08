@@ -11,7 +11,7 @@ objects:
     name: demo-cypress
   spec:
     source:
-      contextDir: app
+      contextDir: test
       git:
         ref: master
         uri: https://github.com/gary-jipp/demo-openshift-cypress
@@ -26,30 +26,30 @@ objects:
         name: demo-cypress:latest
 
 - kind: Deployment
-apiVersion: apps/v1
-metadata:
-  annotations:
-    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"demo-cypress:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"demo-cypress\")].image"},
-    {"from":{"kind":"ImageStreamTag","name":"demo-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"demo-cypress\")].image"}
-    ]'
-  name: demo-cypress
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      deployment: demo-cypress
-  template:
-    metadata:
-      labels:
+  apiVersion: apps/v1
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"demo-cypress:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"demo-cypress\")].image"},
+      {"from":{"kind":"ImageStreamTag","name":"demo-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"demo-cypress\")].image"}
+      ]'
+    name: demo-cypress
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
         deployment: demo-cypress
-    spec:
-      containers:
-        - name: demo-cypress
-          image: 'demo-cypress:latest'
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-      restartPolicy: Always
+    template:
+      metadata:
+        labels:
+          deployment: demo-cypress
+      spec:
+        containers:
+          - name: demo-cypress
+            image: 'demo-cypress:latest'
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+        restartPolicy: Always
 
 - kind: Service
   apiVersion: v1

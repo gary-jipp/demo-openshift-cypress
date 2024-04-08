@@ -12,14 +12,29 @@ oc get imagestreams
 oc import-image node:16-alpine --from=docker.io/library/node:16-alpine --confirm
 ```
 
-#### Create imageStream to hold build image
+#### Import cypress.js image if not there already
+```bash
+oc import-image cypress/included:latest --from=docker.io/cypress/included:latest --confirm
+```
+
+#### Create imageStream to hold app image
 ```bash
 oc create imagestream demo-app
 ```
 
-#### Process template to create build, deployment service & route
+#### Create imageStream to hold test image
+```bash
+oc create imagestream demo-cypress
+```
+
+#### Process template to create app
 ```bash
  oc process -f _openshift/demo-app.yaml  |  oc apply -f -
+ ```
+
+#### Process template to create cypress test app
+```bash
+ oc process -f _openshift/demo-cypress.yaml  |  oc apply -f -
  ```
 
 ## Manually add redeploy trigger for image changes (if not already  in deployment yaml)
