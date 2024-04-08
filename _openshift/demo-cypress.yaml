@@ -19,7 +19,7 @@ objects:
       dockerStrategy:
         from:
           kind: ImageStreamTag
-          name: cypress/included:latest
+          name: cypress:latest
     output:
       to:
         kind: ImageStreamTag

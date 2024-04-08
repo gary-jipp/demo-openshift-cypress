@@ -1,4 +1,4 @@
-FROM docker.io/cypress/included:latest
+FROM cypress:latest
 
 # Set the working directory inside the container
 WORKDIR /app
