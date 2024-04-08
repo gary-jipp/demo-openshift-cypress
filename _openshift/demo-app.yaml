@@ -1,10 +1,11 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
-  name: demo-app-template
+  name: demo-openshift-app
 objects:
-- apiVersion: build.openshift.io/v1
-  kind: BuildConfig
+
+- kind: BuildConfig
+  apiVersion: build.openshift.io/v1
   metadata:
     labels:
       app: demo-app
@@ -14,7 +15,7 @@ objects:
       contextDir: app
       git:
         ref: master
-        uri: https://github.com/gary-jipp/demo-openshift-cypress
+        uri: https://github.com/gary-jipp/demo-openshift-app
     strategy:
       dockerStrategy:
         from:
@@ -26,28 +27,29 @@ objects:
         name: demo-app:latest
 
 - kind: Deployment
-apiVersion: apps/v1
-metadata:
-  annotations:
-    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"demo-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"demo-app\")].image"}]'
-  name: demo-app
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      deployment: demo-app
-  template:
-    metadata:
-      labels:
+  apiVersion: apps/v1
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"demo-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"demo-app\")].image"}]'
+    name: demo-app
+    # namespace: crt-redhat2304-dev
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
         deployment: demo-app
-    spec:
-      containers:
-        - name: demo-app
-          image: 'demo-app:latest'
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-      restartPolicy: Always
+    template:
+      metadata:
+        labels:
+          deployment: demo-app
+      spec:
+        containers:
+          - name: demo-app
+            image: 'demo-app:latest'
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+        restartPolicy: Always
 
 - kind: Service
   apiVersion: v1
