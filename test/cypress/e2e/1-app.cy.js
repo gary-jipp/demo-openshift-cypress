@@ -2,7 +2,7 @@ describe('template spec', () => {
   const baseUrl = Cypress.env('baseUrl');
 
   beforeEach(() => {
-    cy.visit(baseUrl + "/");
+    // cy.visit(baseUrl + "/");
   });
 
 

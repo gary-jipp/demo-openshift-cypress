@@ -1,0 +1,21 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: cypress
+  name: cypress
+spec:
+  source:
+    contextDir: cypress
+    git:
+      ref: master
+      uri: https://github.com/gary-jipp/demo-openshift-cypress
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'cypress-base:latest'
+  output:
+    to:
+      kind: ImageStreamTag
+      name: cypress:latest
