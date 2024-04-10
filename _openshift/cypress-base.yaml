@@ -2,8 +2,8 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   labels:
-    app: cypress
-  name: cypress
+    app: cypress-base
+  name: cypress-base
 spec:
   source:
     contextDir: cypress-base
