@@ -20,7 +20,7 @@ objects:
     name: demo-cypress
   spec:
     source:
-      contextDir: test
+      contextDir: cypress-test
       git:
         ref: master
         uri: https://github.com/gary-jipp/demo-openshift-cypress
