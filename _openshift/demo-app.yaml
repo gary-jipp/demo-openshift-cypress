@@ -4,8 +4,8 @@ metadata:
   name: demo-openshift-app
 objects:
 
-- apiVersion: image.openshift.io/v1
-  kind: ImageStream
+- kind: ImageStream
+  apiVersion: image.openshift.io/v1
   metadata:
     name: demo-app
   spec:
