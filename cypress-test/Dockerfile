@@ -9,4 +9,4 @@ RUN apt-get update && apt-get install -y inotify-tools wget nano && apt-get clea
 COPY . .
 
 # Command to run the application
-ENTRYPOINT ["./startup.sh"]
+ENTRYPOINT ["/app/startup.sh"]
