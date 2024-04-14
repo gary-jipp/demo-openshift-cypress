@@ -21,16 +21,6 @@ oc import-image cypress-local --from=cypress/included:latest --confirm
 oc set image-lookup imagestream/cypress-docker
 ```
 
-#### Create imageStream to hold app image
-```bash
-oc create imagestream demo-app
-```
-
-#### Create imageStream to hold cypress test image
-```bash
-oc create imagestream demo-cypress
-```
-
 #### Process template to create app
 ```bash
  oc process -f _openshift/demo-app.yaml  |  oc apply -f -
