@@ -9,12 +9,16 @@ oc get imagestreams
 
 #### Import node.js image if not there already
 ```bash
-oc import-image node:16-alpine --from=docker.io/library/node:16-alpine --confirm
+oc import-image node:16-alpine --from=node:16-alpine --confirm
 ```
 
-#### Import cypress.js image if not there already
+#### Import cypresss image if not there already
 ```bash
-oc import-image cypress/included:latest --from=docker.io/cypress/included:latest --confirm
+# slash in dockerhub name breaks template. Need a local imagestream
+oc import-image cypress-local --from=cypress/included:latest --confirm
+
+# allow local pulls of this image
+oc set image-lookup imagestream/cypress-docker
 ```
 
 #### Create imageStream to hold app image
@@ -22,7 +26,7 @@ oc import-image cypress/included:latest --from=docker.io/cypress/included:latest
 oc create imagestream demo-app
 ```
 
-#### Create imageStream to hold test image
+#### Create imageStream to hold cypress test image
 ```bash
 oc create imagestream demo-cypress
 ```
